@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+// #include "pbl.h"
 
 void printTable(int** matrix, int len1, int len2){
     for (int i = 0; i < len1; i++)  {
@@ -31,6 +32,10 @@ void traverseX(int** matrix, int* costsArray, int n, int y) {
 }
 
 int networkDelayTime(int** times, int timesSize, int* timesColSize, int n, int k){
+    struct MatrixKeys {
+        int xKey;
+        int yKey;
+    };
 
     // initialize a n x n matrix.
     int **matrix;
@@ -47,7 +52,16 @@ int networkDelayTime(int** times, int timesSize, int* timesColSize, int n, int k
         int cost = times[i][2];
         matrix[from][to] = cost;
     }
-    printTable(matrix, n, n);
+    // printTable(matrix, n, n);
+
+    // PblPriorityQueue *pq = pblPriorityQueueNew();
+    for (int a = 0; a < n; n++) {
+        struct MatrixKeys *matrixKeys;
+        matrixKeys->xKey = k-1;
+        matrixKeys->yKey = a;
+
+        // pblPriorityQueueInsert(pq, -matrix[k-1][a], matrixKeys);
+    }
 
     // initialize array with cost to go to node.
     int *costsArray = malloc(n * sizeof(int));
@@ -76,8 +90,8 @@ int main(){
     int timesColSize = 3;
     int* timesColSizeP = &timesColSize;
 
-    // int result1 = networkDelayTime(times, 3, timesColSizeP, n, k);
-    // printf("result1: %d %d\n\n", result1 == 2, result1);
+    int result1 = networkDelayTime(times, 3, timesColSizeP, n, k);
+    printf("result1: %d %d\n\n", result1 == 2, result1);
 
 
     int arr4[] = {1,2,1};
@@ -87,8 +101,8 @@ int main(){
     int timesColSize2 = 3;
     int* timesColSizeP2 = &timesColSize2;
 
-    // int result2 = networkDelayTime(times2, 1, timesColSizeP2, 2, 2);
-    // printf("result2: %d %d\n", result2 == -1, result2);
+    int result2 = networkDelayTime(times2, 1, timesColSizeP2, 2, 2);
+    printf("result2: %d %d\n", result2 == -1, result2);
 
 
     int timesColSize3 = 3;
